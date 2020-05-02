@@ -20,14 +20,27 @@ class FeedController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .white
         configureUI()
     }
 
     // MARK: -- Helpers
     func configureUI() {
+
+        // register the UICollectionViewCell
         collectionView.register(EarbugCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .feedBackgroundGray
+
+        // Earbug Image for the navigation bar
+        let imageView = UIImageView(image: UIImage(named: "ebLogoNavBar"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.setDimensions(width: 120, height: 37)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: imageView)
+
+        // Settings icon for rightBarButtonItem
+        let settingsImageView = UIImageView(image: UIImage(named: "settingsIconNavBar"))
+        settingsImageView.contentMode = .scaleAspectFit
+        settingsImageView.setDimensions(width: 24, height: 24)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(customView: settingsImageView) 
     }
 }
 
@@ -37,7 +50,7 @@ class FeedController: UICollectionViewController {
 
 extension FeedController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

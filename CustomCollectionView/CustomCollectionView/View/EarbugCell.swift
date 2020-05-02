@@ -13,7 +13,7 @@ class EarbugCell: UICollectionViewCell {
     // MARK: -- Properties
 
     private let profileImageView: UIImageView = {
-        let iv = UIImageView()
+        let iv = UIImageView(image: UIImage(named: "Profile1"))
         iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
         iv.setDimensions(width: 48, height: 48)
@@ -22,11 +22,20 @@ class EarbugCell: UICollectionViewCell {
         return iv
     }()
 
+    private let feedArtImageView: UIImageView = {
+        let iv = UIImageView(image: UIImage(named: "FeedArt1"))
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.setDimensions(width: 400, height: 300)
+        return iv
+    }()
+
     private let captionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 0
-        label.text = "Some test caption"
+        label.textColor = .darkGray
+        label.text = "Yesterday at 8:38 PM"
         return label
     }()
 
@@ -89,12 +98,18 @@ class EarbugCell: UICollectionViewCell {
         addSubview(stack)
         stack.anchor(top: profileImageView.topAnchor,
                      left: profileImageView.rightAnchor,
+                     paddingTop: 6,
                      paddingLeft: 12,
                      paddingRight: 12
         )
 
-        infoLabel.font = UIFont.systemFont(ofSize: 14)
-        infoLabel.text = "Harley Quinn @Harely"
+        infoLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        infoLabel.text = "Thomas Winford"
+
+        //addSubview(feedArtImageView)
+        //feedArtImageView.anchor(top: , left: leftAnchor)
+
+        
 
         let actionStack = UIStackView(arrangedSubviews: [commentButton, retweetButton, likeButton, shareButton])
         actionStack.axis = .horizontal
