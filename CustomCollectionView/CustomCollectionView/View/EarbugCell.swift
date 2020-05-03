@@ -64,7 +64,7 @@ class EarbugCell: UICollectionViewCell {
         fmLabel.font = UIFont.boldSystemFont(ofSize: 14)
         fmLabel.lineBreakMode = .byWordWrapping
         fmLabel.numberOfLines = 0
-        fmLabel.textColor = .black
+        fmLabel.textColor = .blackTextColor
         fmLabel.setDimensions(width: 400, height: 90)
 
         feedMsgView.addSubview(fmLabel)
@@ -101,7 +101,7 @@ class EarbugCell: UICollectionViewCell {
 
     private lazy var commentButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "comment"), for: .normal)
+        button.setImage(UIImage(named: "thumbsup_icon"), for: .normal)
         button.tintColor = .darkGray
         button.setDimensions(width: 20, height: 20)
         button.addTarget(self, action: #selector(handleCommentTapped), for: .touchUpInside)
@@ -110,7 +110,7 @@ class EarbugCell: UICollectionViewCell {
 
     private lazy var retweetButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "retweet"), for: .normal)
+        button.setImage(UIImage(named: "chat_icon"), for: .normal)
         button.tintColor = .darkGray
         button.setDimensions(width: 20, height: 20)
         button.addTarget(self, action: #selector(handleRetweetTapped), for: .touchUpInside)
@@ -119,7 +119,7 @@ class EarbugCell: UICollectionViewCell {
 
     private lazy var likeButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "like"), for: .normal)
+        button.setImage(UIImage(named: "share_icon"), for: .normal)
         button.tintColor = .darkGray
         button.setDimensions(width: 20, height: 20)
         button.addTarget(self, action: #selector(handleLikeTapped), for: .touchUpInside)
@@ -128,7 +128,7 @@ class EarbugCell: UICollectionViewCell {
 
     private lazy var shareButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setImage(UIImage(named: "share"), for: .normal)
+        button.setImage(UIImage(named: "saves_unselected"), for: .normal)
         button.tintColor = .darkGray
         button.setDimensions(width: 20, height: 20)
         button.addTarget(self, action: #selector(handleShareTapped), for: .touchUpInside)
