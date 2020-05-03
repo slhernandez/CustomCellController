@@ -23,6 +23,35 @@ class EarbugCell: UICollectionViewCell {
         return iv
     }()
 
+    private let followOneImageView: UIImageView = {
+        let iv = UIImageView(image: UIImage(named: "Profile2"))
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.setDimensions(width: 30, height: 30)
+        iv.layer.cornerRadius = 30 / 2
+        return iv
+    }()
+
+    private let followTwoImageView: UIImageView = {
+        let iv = UIImageView(image: UIImage(named: "Profile3"))
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.setDimensions(width: 30, height: 30)
+        iv.layer.cornerRadius = 30 / 2
+
+        return iv
+    }()
+
+    private let followThreeImageView: UIImageView = {
+        let iv = UIImageView(image: UIImage(named: "Profile4"))
+        iv.contentMode = .scaleAspectFit
+        iv.clipsToBounds = true
+        iv.setDimensions(width: 30, height: 30)
+        iv.layer.cornerRadius = 30 / 2
+
+        return iv
+    }()
+
     private let feedArtImageView: UIImageView = {
         let iv = UIImageView(image: UIImage(named: "FeedArt1"))
         iv.contentMode = .scaleAspectFit
@@ -41,7 +70,7 @@ class EarbugCell: UICollectionViewCell {
     }()
 
     private let feedInfoContainer: UIView = {
-        let container = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 85))
+        let container = UIView()
         //container.backgroundColor = .darkGray
         container.backgroundColor = .feedInfoBackgroundColor
         return container
@@ -50,31 +79,10 @@ class EarbugCell: UICollectionViewCell {
     private let feedCategoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 3
+        label.numberOfLines = 0
         label.textColor = .darkGray
         label.text = "JUKEBOX"
         return label
-    }()
-
-    private let feedMsgView: UIView = {
-        let feedMsgView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 180))
-        //feedMsgView.backgroundColor = .darkGray
-        let fmLabel = UILabel()
-        fmLabel.text = "My favorite classics to listen to when feeling nostalgic about my childhood."
-        fmLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        fmLabel.lineBreakMode = .byWordWrapping
-        fmLabel.numberOfLines = 0
-        fmLabel.textColor = .blackTextColor
-        fmLabel.setDimensions(width: 400, height: 90)
-
-        feedMsgView.addSubview(fmLabel)
-        fmLabel.top(to: feedMsgView, offset: 0)
-        fmLabel.left(to: feedMsgView, offset: 0)
-        fmLabel.right(to: feedMsgView, offset: 0)
-        fmLabel.bottom(to: feedMsgView, offset: 0)
-
-
-        return feedMsgView
     }()
 
     private let feedMessageLabel: UILabel = {
@@ -85,7 +93,7 @@ class EarbugCell: UICollectionViewCell {
         fmLabel.numberOfLines = 0
         //fmLabel.translatesAutoresizingMaskIntoConstraints = false
         fmLabel.textColor = .black
-        fmLabel.setDimensions(width: 400, height: 40)
+        fmLabel.setDimensions(width: 0, height: 34)
 
         return fmLabel
     }()
@@ -96,6 +104,15 @@ class EarbugCell: UICollectionViewCell {
         label.numberOfLines = 0
         label.textColor = .darkGray
         label.text = "Top Genres: Hip House, Grime, Low Bap"
+        return label
+    }()
+
+    private let followerCntLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 0
+        label.textColor = .darkGray
+        label.text = "+ 3 others"
         return label
     }()
 
@@ -143,8 +160,6 @@ class EarbugCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = .white
 
-
-
         // ---- Profile Image Circle ----
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor,
@@ -183,12 +198,12 @@ class EarbugCell: UICollectionViewCell {
         feedInfoStack.spacing = 0
 
         //feedInfoStack.setCustomSpacing(5.0, after: feedCategoryLabel)
-        feedInfoStack.setCustomSpacing(-5.0, after: feedMessageLabel)
-        feedInfoStack.setCustomSpacing(5.0, after: feedGenereLabel)
+        //feedInfoStack.setCustomSpacing(-5.0, after: feedMessageLabel)
+        //feedInfoStack.setCustomSpacing(5.0, after: feedGenereLabel)
 
         feedInfoContainer.addSubview(feedInfoStack)
         feedInfoContainer.bringSubviewToFront(feedInfoStack)
-        feedInfoContainer.setDimensions(width: 400, height: 90)
+        //feedInfoContainer.setDimensions(width: 400, height: 90)
 
         //addSubview(feedInfoContainer)
 
@@ -198,9 +213,30 @@ class EarbugCell: UICollectionViewCell {
         feedInfoStack.right(to: feedInfoContainer, offset: 10)
         feedInfoStack.bottom(to: feedInfoContainer, offset: 0)
 
+        feedMessageLabel.right(to: feedInfoStack, offset: 50)
+
+        // ---- Follows stack view ----
+        let followerView = UIView()
+        followerView.setDimensions(width: 400, height: 50)
+        followerView.backgroundColor = .white
+        followerView.addSubview(followOneImageView)
+        followOneImageView.top(to: followerView, offset: 0)
+        followOneImageView.left(to: followerView, offset: 10)
+        followOneImageView.bottom(to: followerView, offset: 0)
+        followerView.addSubview(followTwoImageView)
+        followTwoImageView.top(to: followerView, offset: 0)
+        followTwoImageView.left(to: followOneImageView, offset: 40)
+        followTwoImageView.bottom(to: followerView, offset: 0)
+        followerView.addSubview(followThreeImageView)
+        followThreeImageView.top(to: followerView, offset: 0)
+        followThreeImageView.left(to: followTwoImageView, offset: 40)
+        followThreeImageView.bottom(to: followerView, offset: 0)
+
+        // Horizontal stack with album art, feed info and followers
         let feedStack = UIStackView(arrangedSubviews: [
             feedArtImageView,
-            feedInfoContainer
+            feedInfoContainer,
+            followerView
         ])
         feedStack.axis = .vertical
         feedStack.spacing = -5
@@ -208,6 +244,8 @@ class EarbugCell: UICollectionViewCell {
 
         addSubview(feedStack)
         feedStack.top(to: stack, offset: 45)
+
+
 
         // ---- TOOLBAR at the bottom ----
         let actionStack = UIStackView(arrangedSubviews: [commentButton, retweetButton, likeButton, shareButton])
@@ -226,6 +264,17 @@ class EarbugCell: UICollectionViewCell {
                             bottom: bottomAnchor,
                             right: rightAnchor,
                             height: 1)
+
+        let underlineStackView = UIView()
+        underlineStackView.backgroundColor = .systemGroupedBackground
+        addSubview(underlineStackView)
+        underlineStackView.anchor(top: feedStack.bottomAnchor,
+                             left: leftAnchor,
+                             bottom: actionStack.topAnchor,
+                             right: rightAnchor,
+                             paddingBottom: 10,
+                             height: 1)
+
     }
 
     required init?(coder: NSCoder) {
