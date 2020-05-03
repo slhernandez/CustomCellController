@@ -43,25 +43,59 @@ class EarbugCell: UICollectionViewCell {
     private let feedInfoContainer: UIView = {
         let container = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 85))
         //container.backgroundColor = .darkGray
-        container.backgroundColor = .red
+        container.backgroundColor = .feedInfoBackgroundColor
         return container
     }()
 
     private let feedCategoryLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.textColor = .darkGray
         label.text = "JUKEBOX"
         return label
     }()
 
+    private let feedMsgView: UIView = {
+        let feedMsgView = UIView(frame: CGRect(x: 0, y: 0, width: 300, height: 180))
+        //feedMsgView.backgroundColor = .darkGray
+        let fmLabel = UILabel()
+        fmLabel.text = "My favorite classics to listen to when feeling nostalgic about my childhood."
+        fmLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        fmLabel.lineBreakMode = .byWordWrapping
+        fmLabel.numberOfLines = 0
+        fmLabel.textColor = .black
+        fmLabel.setDimensions(width: 400, height: 90)
+
+        feedMsgView.addSubview(fmLabel)
+        fmLabel.top(to: feedMsgView, offset: 0)
+        fmLabel.left(to: feedMsgView, offset: 0)
+        fmLabel.right(to: feedMsgView, offset: 0)
+        fmLabel.bottom(to: feedMsgView, offset: 0)
+
+
+        return feedMsgView
+    }()
+
     private let feedMessageLabel: UILabel = {
+        let fmLabel = UILabel()
+        fmLabel.text = "My favorite classics to listen to when feeling nostalgic about my childhood."
+        fmLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        fmLabel.lineBreakMode = .byWordWrapping
+        fmLabel.numberOfLines = 0
+        //fmLabel.translatesAutoresizingMaskIntoConstraints = false
+        fmLabel.textColor = .black
+        fmLabel.setDimensions(width: 400, height: 40)
+
+        return fmLabel
+    }()
+
+    private let feedGenereLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 0
-        label.textColor = .black
-        label.text = "My favorite classics to listen to when feeling nostalgic about my childhood."
+        label.textColor = .darkGray
+        label.text = "Top Genres: Hip House, Grime, Low Bap"
         return label
     }()
 
@@ -109,6 +143,9 @@ class EarbugCell: UICollectionViewCell {
         super.init(frame: frame)
         backgroundColor = .white
 
+
+
+        // ---- Profile Image Circle ----
         addSubview(profileImageView)
         profileImageView.anchor(top: topAnchor,
                                 left: leftAnchor,
@@ -116,6 +153,7 @@ class EarbugCell: UICollectionViewCell {
                                 paddingLeft: 8
         )
 
+        // ---- Name and Timestamp ----
         let stack = UIStackView(arrangedSubviews: [infoLabel, captionLabel])
         stack.axis = .vertical
         stack.distribution = .fillProportionally
@@ -132,27 +170,46 @@ class EarbugCell: UICollectionViewCell {
         infoLabel.font = UIFont.boldSystemFont(ofSize: 14)
         infoLabel.text = "Thomas Winford"
 
-        addSubview(feedArtImageView)
-        //feedArtImageView.top(to: stack, offset: 45)
-        feedArtImageView.anchor(top: stack.topAnchor, left: leftAnchor, paddingTop: 45)
 
-        // Info section
-        /*let feedInfoStack = UIStackView(arrangedSubviews: [feedCategoryLabel, feedMessageLabel])
+        // ---- Album Art ----
+        //addSubview(feedArtImageView)
+        //feedArtImageView.top(to: stack, offset: 45)
+        //feedArtImageView.anchor(top: stack.topAnchor, left: leftAnchor, paddingTop: 45)
+
+        // ---- Info section ----
+        let feedInfoStack = UIStackView(arrangedSubviews: [feedCategoryLabel, feedMessageLabel, feedGenereLabel])
         feedInfoStack.axis = .vertical
-        stack.distribution = .fillProportionally
-        stack.spacing = 2
+        feedInfoStack.distribution = .fillProportionally
+        feedInfoStack.spacing = 0
+
+        //feedInfoStack.setCustomSpacing(5.0, after: feedCategoryLabel)
+        feedInfoStack.setCustomSpacing(-5.0, after: feedMessageLabel)
+        feedInfoStack.setCustomSpacing(5.0, after: feedGenereLabel)
 
         feedInfoContainer.addSubview(feedInfoStack)
         feedInfoContainer.bringSubviewToFront(feedInfoStack)
-        feedInfoContainer.setDimensions(width: 400, height: 100)
+        feedInfoContainer.setDimensions(width: 400, height: 90)
 
-        addSubview(feedInfoContainer)
+        //addSubview(feedInfoContainer)
 
-        feedInfoContainer.bottom(to: feedArtImageView, offset: 25)
-        feedInfoStack.top(to: feedInfoContainer, offset: 0)
+        //feedInfoContainer.bottom(to: feedArtImageView, offset: 25)
+        feedInfoStack.top(to: feedInfoContainer, offset: 8)
         feedInfoStack.left(to: feedInfoContainer, offset: 10)
-        feedInfoStack.bottom(to: feedInfoContainer, offset: 10)*/
+        feedInfoStack.right(to: feedInfoContainer, offset: 10)
+        feedInfoStack.bottom(to: feedInfoContainer, offset: 0)
 
+        let feedStack = UIStackView(arrangedSubviews: [
+            feedArtImageView,
+            feedInfoContainer
+        ])
+        feedStack.axis = .vertical
+        feedStack.spacing = -5
+        //feedStack.distribution = .fillEqually
+
+        addSubview(feedStack)
+        feedStack.top(to: stack, offset: 45)
+
+        // ---- TOOLBAR at the bottom ----
         let actionStack = UIStackView(arrangedSubviews: [commentButton, retweetButton, likeButton, shareButton])
         actionStack.axis = .horizontal
         actionStack.spacing = 72
@@ -160,6 +217,7 @@ class EarbugCell: UICollectionViewCell {
         addSubview(actionStack)
         actionStack.centerX(inView: self)
         actionStack.anchor(bottom: bottomAnchor, paddingBottom: 8)
+
 
         let underlineView = UIView()
         underlineView.backgroundColor = .systemGroupedBackground
